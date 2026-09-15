@@ -1,3 +1,21 @@
+--Based on the numbering and composition factors in D. H. Collingwood,
+-- "The n-homology of Harish-Chandra modules: generalizing a theorem
+-- of Kostant", Math. Ann. 272 (1985), 161-187, Tables 5-6.
+
+-- E6D5 corresponds to (E6,D5), with dim(G/P)=16 and labels 0,...,26.
+-- E7E6 corresponds to (E7,E6), with dim(G/P)=27 and labels 0,...,55.
+-- The identity has label 26 or 55, respectively; label 0 is maximal.
+
+-- For either table H, the record H#x describes the dual Verma module N_x:
+-- "length"       is the length of x;
+-- "rightAscents" has entries i => y for x*s_i=y>x in W^m,
+-- using Bourbaki numbering for the simple reflections;
+--   "weights"      has entries p => {y1,...,yr}, meaning
+-- Gr^W_p N_x = L_y1 + ... + L_yr.
+-- Here the socle L_x has weight
+-- dim(G/P)+length(x), as in "Local cohomology with Schubert support on compact Hermitian symmetric spaces" by Perlman.
+
+
 E6D5 = hashTable {
     0 => hashTable {
         "length" => 16,
@@ -235,6 +253,7 @@ E6D5 = hashTable {
         }
     }
 };
+
 
 E7E6 = hashTable {
     0 => hashTable {

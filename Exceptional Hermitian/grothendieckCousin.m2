@@ -1,4 +1,14 @@
+-- grothendieckCousin(H,x) returns G, where G#q has entries y => H#y
+-- for y>=x with length(y)=q. 
+-- G#q records the summands N_y of GC_x^q. 
 
+-- cousinCohomology(G) returns C, where C#q#p lists the simple labels
+-- occurring in Gr^W_p H^q(G). Zero degrees and weight pieces are omitted.
+-- The calculation uses the Boolean cube structure of these two cases.
+
+-- allCousinCohomology(H) returns a table A with an entry for every x:
+-- A#x = cousinCohomology(grothendieckCousin(H,x)).
+-- Thus A#x#q#p lists the simple labels in Gr^W_p H^q(GC_x).
 
 
 grothendieckCousin = (H, x) -> (
@@ -59,5 +69,3 @@ cousinCohomology(G6)
 C6 = allLocalCohomology E6D5
 C7 = allLocalCohomology E7E6
 
-tex o4
-tex o5
