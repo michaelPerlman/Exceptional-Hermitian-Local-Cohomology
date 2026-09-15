@@ -10,6 +10,10 @@
 -- A#x = cousinCohomology(grothendieckCousin(H,x)).
 -- Thus A#x#q#p lists the simple labels in Gr^W_p H^q(GC_x).
 
+-- for HRH, by Perlman–Raicu, Lemma 2.1, an additional constituent $(q,p;y)$ 
+--starts in Hodge level $(d_X+\ell(y)-p)/2$. 
+--Take the minimum minus one, excluding the universal lowest weight piece
+
 
 grothendieckCousin = (H, x) -> (
     if not H#?x then error "unknown index";
