@@ -47,8 +47,23 @@ cousinCohomology = G -> (
 );
 
 
-allLocalCohomology = H -> hashTable apply(keys H,
+allCousinCohomology = H -> hashTable apply(keys H,
     x -> x => cousinCohomology(grothendieckCousin(H, x)));
+
+
+hrh = (H, x) -> (
+    C := cousinCohomology(grothendieckCousin(H, x));
+    d := max apply(values H, N -> N#"length");
+    c := H#x#"length";
+    h := infinity;
+    scan(keys C, q -> scan(keys (C#q), p -> if p > d+c then
+        scan(C#q#p, y -> h = min(h, (d + H#y#"length" - p)//2 - 1))
+    ));
+    h
+);
+
+allHRH = H -> hashTable apply(keys H, x -> x => hrh(H, x));
+
 
 end
 
@@ -66,6 +81,11 @@ cousinCohomology(G21)
 G7 = grothendieckCousin(E7E6, 55)
 cousinCohomology(G6)
 
-C6 = allLocalCohomology E6D5
-C7 = allLocalCohomology E7E6
+C6 = allCousinCohomology E6D5
+C7 = allCousinCohomology E7E6
+
+hrh(E6D5, 20) -- 2
+hrh(E7E6, 39) -- 3
+allHRH(E6D5)
+allHRH(E7E6)
 
