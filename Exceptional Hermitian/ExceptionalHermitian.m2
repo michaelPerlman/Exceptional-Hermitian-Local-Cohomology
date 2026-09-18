@@ -1,4 +1,9 @@
---Based on the numbering and composition factors in D. H. Collingwood,
+--Based on the numbering and weight filtrations in Tables 7.1, 7.2 of
+-- D. Collingwood, R. Irving, B. Shelton
+-- "Filtrations on generalized Verma modules for Hermitian symmetric pairs",
+-- J. Reine Angew. Math. 383, 1988
+
+-- see also D. Collingwood,
 -- "The n-homology of Harish-Chandra modules: generalizing a theorem
 -- of Kostant", Math. Ann. 272 (1985), 161-187, Tables 5-6.
 
