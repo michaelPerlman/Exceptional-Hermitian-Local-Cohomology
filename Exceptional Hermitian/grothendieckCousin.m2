@@ -1,21 +1,14 @@
--- grothendieckCousin(H,x) returns G, where G#q has entries y => H#y
--- for y>=x with length(y)=q. 
--- G#q records the summands N_y of GC_x^q. 
 
--- cousinCohomology(G) returns C, where C#q#p lists the simple labels
--- occurring in Gr^W_p H^q(G). Zero degrees and weight pieces are omitted.
--- The calculation uses the Boolean cube structure of these two cases.
+-- Uses the tables in ExceptionalHermitian.m2 to calculate
+-- local cohomology and HRH via the Grothendieck--Cousin complex
 
--- allCousinCohomology(H) returns a table A with an entry for every x:
--- A#x = cousinCohomology(grothendieckCousin(H,x)).
--- Thus A#x#q#p lists the simple labels in Gr^W_p H^q(GC_x).
-
--- for HRH, by Perlman–Raicu, Lemma 2.1, an additional constituent $(q,p;y)$ 
---starts in Hodge level $(d_X+\ell(y)-p)/2$. 
---Take the minimum minus one, excluding the universal lowest weight piece
 
 
 grothendieckCousin = (H, x) -> (
+-- Let H be one of the two hash tables from ExceptionalHermitian.m2.
+-- grothendieckCousin(H,x) returns a hash table G, where G#q has entries y => H#y
+-- for y>=x with length(y)=q. 
+-- G#q records the summands N_y of GC_x^q. 
     if not H#?x then error "unknown index";
     G := new MutableHashTable;
     vertices := {x};
@@ -30,6 +23,14 @@ grothendieckCousin = (H, x) -> (
 
 
 cousinCohomology = G -> (
+-- G is the output of grothendieckCousin(H,x)    
+-- cousinCohomology(G) returns a hash table C, where C#q#p lists the simple labels
+-- occurring in Gr^W_p H^q(G). 
+-- The calculation uses Theorem 3.1 in 
+-- "Local cohomology with Schubert support on compact Hermtian symmetric spaces"
+-- in order to describe the maps in G.
+-- In short, the maps are "maximal rank" as allowed by the Bruhat order
+-- and the composition factors of the dual Verma modules.
     degrees := new MutableHashTable;
     scan(keys G, q -> scan(values (G#q), N ->
         scan(keys (N#"weights"), p -> scan(N#"weights"#p, t -> (
@@ -51,11 +52,25 @@ cousinCohomology = G -> (
 );
 
 
+-- Let H be one of the two hash tables from ExceptionalHermitian.m2.
+-- allCousinCohomology(H) returns a hash table A with an entry for every x:
+-- A#x = cousinCohomology(grothendieckCousin(H,x)).
+-- Thus A#x#q#p lists the simple labels in Gr^W_p H^q(GC_x).
 allCousinCohomology = H -> hashTable apply(keys H,
     x -> x => cousinCohomology(grothendieckCousin(H, x)));
 
 
 hrh = (H, x) -> (
+-- H is one of the two hash tables from ExceptionalHermitian.m2. 
+-- x is a coset representative of W/W_m  
+ -- this function calculates the Hodge rational homology level of
+-- Dirks--Olano--Raychaudhury and Park--Popa.
+-- It does this by using cousinCohomology and Lemma 2.1 of
+-- "Hodge ideals for the determinant hypersurface" by Perlman--Raicu,
+-- which describes the starting level of F on IC_Z^H(k).
+-- Precisely, an additional constituent $(q,p;y)$ 
+-- starts in Hodge level $(d_X+\ell(y)-p)/2$. 
+-- The function hrh takes the minimum minus one, excluding the lowest weight piece   
     C := cousinCohomology(grothendieckCousin(H, x));
     d := max apply(values H, N -> N#"length");
     c := H#x#"length";
@@ -66,6 +81,8 @@ hrh = (H, x) -> (
     h
 );
 
+-- allHRH(H) takes a hash table H from ExceptionalHermitian.m2.
+-- and outputs a hash table of all HRH levels.
 allHRH = H -> hashTable apply(keys H, x -> x => hrh(H, x));
 
 
@@ -83,7 +100,7 @@ cousinCohomology(G21)
 
 
 G7 = grothendieckCousin(E7E6, 55)
-cousinCohomology(G6)
+cousinCohomology(G7)
 
 C6 = allCousinCohomology E6D5
 C7 = allCousinCohomology E7E6
@@ -92,4 +109,3 @@ hrh(E6D5, 20) -- 2
 hrh(E7E6, 39) -- 3
 allHRH(E6D5)
 allHRH(E7E6)
-

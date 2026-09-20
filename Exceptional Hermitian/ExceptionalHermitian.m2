@@ -1,3 +1,7 @@
+--This file encodes the weight filtrations on the dual Verma modules
+--for the Hermtian pairs (E_6,D_5) and (E_7,E_8)
+--This data is used to calculate local cohomology in grothendieckCousin.m2
+
 --Based on the numbering and weight filtrations in Tables 7.1, 7.2 of
 -- D. Collingwood, R. Irving, B. Shelton
 -- "Filtrations on generalized Verma modules for Hermitian symmetric pairs",
@@ -9,7 +13,7 @@
 
 -- E6D5 corresponds to (E6,D5), with dim(G/P)=16 and labels 0,...,26.
 -- E7E6 corresponds to (E7,E6), with dim(G/P)=27 and labels 0,...,55.
--- The identity has label 26 or 55, respectively; label 0 is maximal.
+-- The identity has label 26 or 55, respectively. Label 0 is maximal.
 
 -- For either table H, the record H#x describes the dual Verma module N_x:
 -- "length"       is the length of x;
