@@ -1,5 +1,5 @@
 --This file encodes the weight filtrations on the dual Verma modules
---for the Hermtian pairs (E_6,D_5) and (E_7,E_8)
+--for the Hermtian pairs (E_6,D_5) and (E_7,E_6)
 --This data is used to calculate local cohomology in grothendieckCousin.m2
 
 --Based on the numbering and weight filtrations in Tables 7.1, 7.2 of
